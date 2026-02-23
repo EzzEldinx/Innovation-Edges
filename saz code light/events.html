@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events & News | Innovation Edge</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; overflow-x: hidden; }
@@ -63,6 +68,9 @@
 
         .reveal-up { opacity: 0; transform: translateY(40px); }
         .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
+
+        /* Performance: Defer rendering of below-fold sections */
+        .below-fold { content-visibility: auto; contain-intrinsic-size: auto 100vh; }
     </style>
 </head>
 <body class="antialiased">
@@ -135,11 +143,11 @@
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-slate-200 rounded-full animate-[spin_30s_linear_infinite_reverse]"></div>
                 
                 <div class="absolute top-[5%] right-[0%] w-[280px] h-[320px] rounded-2xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white z-10 hover:z-30">
-                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Conference">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Conference" loading="lazy" decoding="async">
                 </div>
 
                 <div class="absolute bottom-[0%] left-[5%] w-[260px] h-[240px] rounded-2xl overflow-hidden shadow-2xl transform -rotate-6 hover:rotate-0 transition-all duration-500 border-4 border-white z-20 hover:z-30">
-                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 filter grayscale-[20%]" alt="Networking">
+                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 filter grayscale-[20%]" alt="Networking" loading="lazy" decoding="async">
                 </div>
 
                 <div class="absolute top-[45%] left-[-10%] bg-white/90 backdrop-blur-md border border-slate-100 p-4 rounded-xl shadow-xl flex items-center gap-4 z-40 hover:scale-105 transition-transform duration-300">
@@ -156,14 +164,14 @@
         </div>
     </header>
 
-    <section class="py-24 bg-slate-50 relative">
+    <section class="py-24 bg-slate-50 relative below-fold">
         <div class="container mx-auto px-6 md:px-24">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 
                 <div class="event-card reveal-up md:col-span-2">
                     <div class="md:flex">
                         <div class="md:w-2/5 event-img-wrap h-[300px] md:h-auto">
-                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" class="event-img" alt="Tamkeen Tech">
+                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" class="event-img" loading="lazy" decoding="async" alt="Tamkeen Tech">
                             <div class="date-badge">APR 08, 2025</div>
                         </div>
                         <div class="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
@@ -196,7 +204,7 @@
 
                 <div class="event-card reveal-up">
                     <div class="event-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop" class="event-img" alt="AI Mastery">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop" class="event-img" loading="lazy" decoding="async" alt="AI Mastery">
                         <div class="date-badge">MAR 06, 2025</div>
                     </div>
                     <div class="p-8">
@@ -221,7 +229,7 @@
 
                 <div class="event-card reveal-up" style="transition-delay: 0.1s;">
                     <div class="event-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="event-img" alt="Dr Elham Workshop">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="event-img" loading="lazy" decoding="async" alt="Dr Elham Workshop">
                         <div class="date-badge">MAR 04, 2025</div>
                     </div>
                     <div class="p-8">
@@ -249,7 +257,7 @@
         </div>
     </section>
 
-    <footer id="contact" class="bg-slate-950 text-white pt-24 pb-10 relative z-20">
+    <footer id="contact" class="bg-slate-950 text-white pt-24 pb-10 relative z-20 below-fold">
         <div class="container mx-auto px-6 md:px-24 mb-20">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
@@ -278,7 +286,7 @@
                         </div>
                     </div>
                     <div class="w-full h-48 rounded-xl overflow-hidden border border-white/10 relative group bg-slate-900">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="map-style"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="map-style" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
@@ -290,35 +298,45 @@
     </footer>
 
     <script>
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
-
-        gsap.registerPlugin(ScrollTrigger);
-
-        window.addEventListener('load', () => {
-            const tl = gsap.timeline();
-            tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.2 })
-              .to(".loader", { height: 0, duration: 0.8, ease: "power4.inOut" })
-              .to(".reveal-up", { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4");
-        });
-
-        gsap.utils.toArray('.event-card').forEach(card => {
-            gsap.to(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-        });
-
-        function toggleCard(btn) {
-            const card = btn.closest('.event-card');
-            card.classList.toggle('is-expanded');
-            const textSpan = btn.querySelector('span');
-            if (card.classList.contains('is-expanded')) {
-                textSpan.innerText = "Show Less";
-            } else {
-                if(btn.innerText.includes("Brief")) textSpan.innerText = "Read Full Brief";
-                else if(btn.innerText.includes("Summary")) textSpan.innerText = "Read Summary";
-                else textSpan.innerText = "View Details";
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Lenis !== 'undefined') {
+                var lenis = new Lenis({ duration: 1.2, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
             }
-        }
+
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                window.addEventListener('load', function() {
+                    var tl = gsap.timeline();
+                    tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.2 })
+                      .to(".loader", { height: 0, duration: 0.8, ease: "power4.inOut", onComplete: function() {
+                          var loader = document.querySelector('.loader');
+                          if (loader) loader.remove();
+                      }})
+                      .to(".reveal-up", { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4");
+                });
+
+                gsap.utils.toArray('.event-card').forEach(function(card) {
+                    gsap.to(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+                });
+            }
+
+            // Expose toggleCard globally for onclick handlers
+            window.toggleCard = function(btn) {
+                var card = btn.closest('.event-card');
+                card.classList.toggle('is-expanded');
+                var textSpan = btn.querySelector('span');
+                if (card.classList.contains('is-expanded')) {
+                    textSpan.innerText = "Show Less";
+                } else {
+                    if (btn.innerText.includes("Brief")) textSpan.innerText = "Read Full Brief";
+                    else if (btn.innerText.includes("Summary")) textSpan.innerText = "Read Summary";
+                    else textSpan.innerText = "View Details";
+                }
+            };
+        });
     </script>
 </body>
 </html>
