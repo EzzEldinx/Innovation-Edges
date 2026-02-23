@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services | Innovation Edge</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
     <style>
         :root { --bg-dark: #050505; --text-light: #e5e5e5; --accent: #3b82f6; }
@@ -23,12 +28,12 @@
 
         /* Background Effects */
         .ambient-light { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: -1; pointer-events: none; background: #020204; }
-        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: float 20s infinite ease-in-out alternate; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: float 20s infinite ease-in-out alternate; will-change: transform; contain: layout style; }
         .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #1e3a8a 0%, transparent 70%); animation-duration: 25s; }
         .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #312e81 0%, transparent 70%); animation-duration: 30s; animation-delay: -5s; }
         @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
         
-        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://grainy-gradients.vercel.app/noise.svg'); opacity: 0.04; pointer-events: none; z-index: 0; }
+        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.04; pointer-events: none; z-index: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
         .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; }
 
         /* --- STICKY SCROLL STYLES --- */
@@ -92,6 +97,13 @@
         /* Dark Map */
         .dark-map { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
         .dark-map:hover { filter: grayscale(0%) invert(0%); }
+
+        /* Performance: GPU compositing for animated elements */
+        .ambient-light { contain: layout style paint; }
+        .visual-card { will-change: opacity; }
+
+        /* Performance: Defer rendering of below-fold sections */
+        .below-fold { content-visibility: auto; contain-intrinsic-size: auto 100vh; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white">
@@ -129,7 +141,7 @@
         </h1>
     </section>
 
-    <section class="service-section bg-black/20" id="services-wrapper">
+    <section class="service-section bg-black/20 below-fold" id="services-wrapper">
         
         <div class="service-content">
             
@@ -206,7 +218,7 @@
         <div class="service-visuals bg-black hidden md:flex">
             
             <div class="visual-card active" id="visual-0">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Workshop">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="visual-img" loading="lazy" decoding="async" alt="Workshop">
                 <div class="img-overlay-text">
                     <h4 class="text-3xl font-display font-bold">Interactive Learning</h4>
                     <p class="text-sm font-mono text-gray-400 mt-2">REAL-WORLD SIMULATION</p>
@@ -214,7 +226,7 @@
             </div>
 
             <div class="visual-card" id="visual-1">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Consultation">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="visual-img" loading="lazy" decoding="async" alt="Consultation">
                 <div class="img-overlay-text">
                     <h4 class="text-3xl font-display font-bold">Expert Guidance</h4>
                     <p class="text-sm font-mono text-gray-400 mt-2">DATA DRIVEN DECISIONS</p>
@@ -222,7 +234,7 @@
             </div>
 
             <div class="visual-card" id="visual-2">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop" class="visual-img" alt="Conference">
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop" class="visual-img" loading="lazy" decoding="async" alt="Conference">
                 <div class="img-overlay-text">
                     <h4 class="text-3xl font-display font-bold">Global Events</h4>
                     <p class="text-sm font-mono text-gray-400 mt-2">IMPACTFUL GATHERINGS</p>
@@ -230,7 +242,7 @@
             </div>
 
             <div class="visual-card" id="visual-3">
-                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Courses">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" class="visual-img" loading="lazy" decoding="async" alt="Courses">
                 <div class="img-overlay-text">
                     <h4 class="text-3xl font-display font-bold">Certified Growth</h4>
                     <p class="text-sm font-mono text-gray-400 mt-2">CSC RECOGNIZED</p>
@@ -239,7 +251,7 @@
         </div>
     </section>
 
-    <footer id="contact" class="bg-black text-white pt-20 border-t border-white/10 relative z-20">
+    <footer id="contact" class="bg-black text-white pt-20 border-t border-white/10 relative z-20 below-fold">
         <div class="container mx-auto px-6 md:px-24 mb-16">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
@@ -270,7 +282,7 @@
                         </div>
                     </div>
                     <div class="w-full h-48 rounded-xl overflow-hidden border border-white/20 relative group">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="dark-map"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="dark-map" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
@@ -283,50 +295,59 @@
     </footer>
 
     <script>
-        // Smooth Scroll
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth Scroll (with safety check)
+            if (typeof Lenis !== 'undefined') {
+                var lenis = new Lenis({ duration: 1.2, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            }
 
-        gsap.registerPlugin(ScrollTrigger);
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
 
-        // Preloader & Hero
-        window.addEventListener('load', () => {
-            const tl = gsap.timeline();
-            tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
-              .to(".loader", { height: 0, duration: 1, ease: "power4.inOut" })
-              .from(".reveal-text", { y: 100, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.5");
+                // Preloader & Hero
+                window.addEventListener('load', function() {
+                    var tl = gsap.timeline();
+                    tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
+                      .to(".loader", { height: 0, duration: 1, ease: "power4.inOut", onComplete: function() {
+                          var loader = document.querySelector('.loader');
+                          if (loader) loader.remove();
+                      }})
+                      .from(".reveal-text", { y: 100, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.5");
+                });
+
+                // STICKY SCROLL LOGIC
+                var serviceBlocks = document.querySelectorAll('.service-block');
+                var visualCards = document.querySelectorAll('.visual-card');
+
+                ScrollTrigger.create({
+                    trigger: "#services-wrapper",
+                    start: "top top",
+                    end: "bottom bottom",
+                    pin: ".service-visuals",
+                });
+
+                serviceBlocks.forEach(function(block, index) {
+                    ScrollTrigger.create({
+                        trigger: block,
+                        start: "top center",
+                        end: "bottom center",
+                        onEnter: function() { updateVisual(index); },
+                        onEnterBack: function() { updateVisual(index); }
+                    });
+                });
+
+                function updateVisual(index) {
+                    serviceBlocks.forEach(function(b, i) {
+                        b.classList.toggle('active', i === index);
+                    });
+                    visualCards.forEach(function(card, i) {
+                        card.classList.toggle('active', i === index);
+                    });
+                }
+            }
         });
-
-        // STICKY SCROLL LOGIC
-        const serviceBlocks = document.querySelectorAll('.service-block');
-        const visualCards = document.querySelectorAll('.visual-card');
-
-        ScrollTrigger.create({
-            trigger: "#services-wrapper",
-            start: "top top",
-            end: "bottom bottom",
-            pin: ".service-visuals",
-        });
-
-        serviceBlocks.forEach((block, index) => {
-            ScrollTrigger.create({
-                trigger: block,
-                start: "top center",
-                end: "bottom center",
-                onEnter: () => updateVisual(index),
-                onEnterBack: () => updateVisual(index)
-            });
-        });
-
-        function updateVisual(index) {
-            serviceBlocks.forEach((b, i) => {
-                b.classList.toggle('active', i === index);
-            });
-            visualCards.forEach((card, i) => {
-                card.classList.toggle('active', i === index);
-            });
-        }
     </script>
 </body>
 </html>

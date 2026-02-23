@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innovation Edge | Future Ready</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
     <style>
         body { 
@@ -40,6 +45,7 @@
             position: absolute; border-radius: 50%; filter: blur(120px);
             opacity: 0.6; mix-blend-mode: multiply;
             animation: move-aurora 20s infinite alternate ease-in-out;
+            will-change: transform; contain: layout style;
         }
         .aurora-blue { background: #93c5fd; width: 55vw; height: 55vh; top: -10%; left: -10%; animation-delay: 0s; }
         .aurora-purple { background: #c4b5fd; width: 50vw; height: 50vh; top: 10%; right: -10%; animation-delay: -5s; }
@@ -105,18 +111,25 @@
             font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 50; 
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-        .ticker-track { display: flex; animation: scroll-ticker 25s linear infinite; white-space: nowrap; }
+        .ticker-track { display: flex; animation: scroll-ticker 25s linear infinite; white-space: nowrap; will-change: transform; }
         .ticker-item { padding: 0 40px; letter-spacing: 1px; }
         .ticker-highlight { color: #3b82f6; font-weight: bold; }
         @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- MARQUEE FOR ABOUT SECTION --- */
         .marquee-container { overflow: hidden; white-space: nowrap; }
-        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; will-change: transform; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
         .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
         .map-style:hover { filter: grayscale(0%) invert(0%); }
+
+        /* Performance: GPU compositing for animated elements */
+        .aurora-container { contain: layout style paint; }
+        .floating-card { will-change: transform, opacity; }
+
+        /* Performance: Defer rendering of below-fold sections */
+        .below-fold { content-visibility: auto; contain-intrinsic-size: auto 100vh; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-200 selection:text-blue-900">
@@ -225,7 +238,7 @@
 
     </header>
 
-    <section id="about" class="flex flex-col md:flex-row h-screen relative z-20" data-bgcolor="#dbeafe">
+    <section id="about" class="flex flex-col md:flex-row h-screen relative z-20 below-fold" data-bgcolor="#dbeafe">
         <div class="md:w-1/2 p-12 md:p-24 flex flex-col justify-center relative">
             <span class="text-blue-700 font-mono text-xs uppercase tracking-widest mb-6 reveal-up font-bold">Who We Are</span>
             <h2 class="text-5xl md:text-7xl font-bold font-display uppercase leading-tight mb-8 reveal-up text-slate-900">Bridging<br>The Gap.</h2>
@@ -238,7 +251,7 @@
             </div>
         </div>
         <div class="md:w-1/2 h-[50vh] md:h-auto relative overflow-hidden bg-white">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105" id="split-image" alt="Architecture">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105" id="split-image" alt="Architecture" loading="lazy" decoding="async" width="2070" height="1380">
         </div>
     </section>
 
@@ -251,7 +264,7 @@
         </div>
     </div>
 
-    <section id="tracks" class="h-screen relative overflow-hidden flex items-center z-20" data-bgcolor="#ffedd5">
+    <section id="tracks" class="h-screen relative overflow-hidden flex items-center z-20 below-fold" data-bgcolor="#ffedd5">
         <div class="absolute top-10 left-6 md:left-24 z-10"><span class="text-xs font-bold uppercase tracking-widest border-b border-orange-400 pb-1 text-orange-900">Our Ecosystem</span></div>
         <div class="flex gap-4 md:gap-8 px-6 md:px-24" id="horizontal-wrapper">
             <div class="min-w-[300px] flex flex-col justify-center pr-10">
@@ -260,25 +273,25 @@
             </div>
 
             <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all" loading="lazy" decoding="async">
                 <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-blue-300 bg-blue-900/30 px-2 py-1 rounded">REF: 7490343</span><h3 class="text-2xl font-bold mt-2 text-white">IT Consultancy</h3></div>
             </div>
             <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all" loading="lazy" decoding="async">
                 <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-orange-300 bg-orange-900/30 px-2 py-1 rounded">REF: 823002</span><h3 class="text-2xl font-bold mt-2 text-white">Conference Mgmt</h3></div>
             </div>
             <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all" loading="lazy" decoding="async">
                 <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-purple-300 bg-purple-900/30 px-2 py-1 rounded">REF: 731013</span><h3 class="text-2xl font-bold mt-2 text-white">Marketing & PR</h3></div>
             </div>
             <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all" loading="lazy" decoding="async">
                 <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-green-300 bg-green-900/30 px-2 py-1 rounded">REF: 661902</span><h3 class="text-2xl font-bold mt-2 text-white">Investment</h3></div>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="bg-slate-950 text-white pt-24 pb-10 relative z-20" data-bgcolor="#020617">
+    <footer id="contact" class="bg-slate-950 text-white pt-24 pb-10 relative z-20 below-fold" data-bgcolor="#020617">
         <div class="container mx-auto px-6 md:px-24 mb-20">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
@@ -309,7 +322,7 @@
                         </div>
                     </div>
                     <div class="w-full h-48 rounded-xl overflow-hidden border border-white/10 relative group bg-slate-900">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="map-style"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="map-style" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
@@ -321,44 +334,53 @@
     </footer>
 
     <script>
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Lenis !== 'undefined') {
+                var lenis = new Lenis({ duration: 1.2, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+            }
 
-        gsap.registerPlugin(ScrollTrigger);
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
 
-        gsap.utils.toArray('[data-bgcolor]').forEach((section) => {
-            ScrollTrigger.create({
-                trigger: section,
-                start: "top center",
-                end: "bottom center",
-                onEnter: () => gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 }),
-                onEnterBack: () => gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 })
-            });
+                gsap.utils.toArray('[data-bgcolor]').forEach(function(section) {
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top center",
+                        end: "bottom center",
+                        onEnter: function() { gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 }); },
+                        onEnterBack: function() { gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 }); }
+                    });
+                });
+
+                gsap.utils.toArray('.reveal-up').forEach(function(elem, i) {
+                    gsap.to(elem, {
+                        scrollTrigger: { trigger: elem, start: "top 85%" },
+                        y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: i * 0.05
+                    });
+                });
+
+                window.addEventListener('load', function() {
+                    var tl = gsap.timeline();
+                    tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
+                      .to(".loader", { height: 0, duration: 1, ease: "power4.inOut", onComplete: function() {
+                          var loader = document.querySelector('.loader');
+                          if (loader) loader.remove();
+                      }});
+                });
+
+                var tracksSection = document.getElementById("tracks");
+                var wrapper = document.getElementById("horizontal-wrapper");
+                if (tracksSection && wrapper) {
+                    gsap.to(wrapper, {
+                        x: function() { return -(wrapper.scrollWidth - window.innerWidth); },
+                        ease: "none",
+                        scrollTrigger: { trigger: tracksSection, pin: true, scrub: 1, end: function() { return "+=" + wrapper.scrollWidth; } }
+                    });
+                }
+            }
         });
-
-        gsap.utils.toArray('.reveal-up').forEach((elem, i) => {
-            gsap.to(elem, {
-                scrollTrigger: { trigger: elem, start: "top 85%" },
-                y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: i * 0.05
-            });
-        });
-
-        window.addEventListener('load', () => {
-            const tl = gsap.timeline();
-            tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
-              .to(".loader", { height: 0, duration: 1, ease: "power4.inOut" });
-        });
-
-        const section = document.getElementById("tracks");
-        const wrapper = document.getElementById("horizontal-wrapper");
-        if (section && wrapper) {
-            gsap.to(wrapper, {
-                x: () => -(wrapper.scrollWidth - window.innerWidth),
-                ease: "none",
-                scrollTrigger: { trigger: section, pin: true, scrub: 1, end: () => "+=" + wrapper.scrollWidth }
-            });
-        }
     </script>
 </body>
 </html>
