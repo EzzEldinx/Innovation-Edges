@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation Edge | Future Ready</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff; 
+            color: #0f172a; 
+            overflow-x: hidden; 
+            transition: background-color 0.6s ease-in-out; /* Faster transition to feel the color pop */
+        }
+        
+        h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .reveal-up { opacity: 0; transform: translateY(50px); }
+
+        /* --- WATERFALL ANIMATION (INTENSE) --- */
+        .neon-stream-container { position: relative; height: 100%; width: 100%; overflow: hidden; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); }
+        .floating-card {
+            position: absolute; padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9); /* More opaque to pop against colors */
+            border: 1px solid rgba(0,0,0,0.1);
+            backdrop-filter: blur(4px); border-radius: 8px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 12px; text-transform: uppercase;
+            letter-spacing: 0.5px; color: #0f172a; font-weight: 800;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); white-space: nowrap; opacity: 0;
+        }
+        .fc-blue { border-left: 4px solid #2563eb; color: #1e40af; }
+        .fc-orange { border-left: 4px solid #f97316; color: #9a3412; }
+        .fc-purple { border-left: 4px solid #9333ea; color: #6b21a8; }
+        .fc-green { border-left: 4px solid #10b981; color: #065f46; }
+
+        @keyframes fall { 
+            0% { top: -10%; opacity: 0; transform: translateY(-20px); } 
+            10% { opacity: 1; } 90% { opacity: 1; } 
+            100% { top: 110%; opacity: 0; transform: translateY(0); } 
+        }
+        .speed-fast { animation: fall 7s linear infinite; }
+        .speed-med { animation: fall 10s linear infinite; }
+        .speed-slow { animation: fall 14s linear infinite; }
+        
+        /* Map & Footer */
+        .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
+        .map-style:hover { filter: grayscale(0%) invert(0%); }
+        .marquee-container { overflow: hidden; white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <div class="loader text-slate-900 font-display text-4xl font-bold tracking-tighter"><span class="loader-text">INNOVATION EDGE</span></div>
+
+    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-40 text-slate-900 transition-colors duration-300">
+        <div class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2">
+            <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse shadow-lg shadow-blue-200"></div> Innovation Edge
+        </div>
+        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-bold opacity-80">
+            <a href="#about" class="hover:text-blue-600 transition-colors">Vision</a>
+            <a href="#tracks" class="hover:text-blue-600 transition-colors">Expertise</a>
+            <a href="services.html" class="hover:text-blue-600 transition-colors">Services</a>
+            <a href="#contact" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+        <a href="#contact" class="border border-slate-900/10 bg-white/50 px-6 py-2 rounded-full text-[10px] uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm">Partner With Us</a>
+    </nav>
+
+    <header class="relative h-screen px-6 md:px-24 overflow-hidden flex items-center" data-bgcolor="#ffffff">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 h-full">
+            <div class="z-10 flex flex-col justify-center">
+                <div class="overflow-hidden mb-8">
+                    <div class="flex items-center gap-4 reveal-up">
+                        <span class="px-3 py-1 border border-slate-300 bg-slate-100 rounded-full text-[10px] text-slate-600 uppercase tracking-widest">EST. 2024</span>
+                        <span class="text-xs text-slate-500 uppercase tracking-widest">Kuwait City, Al-Mirqab</span>
+                    </div>
+                </div>
+                <h1 class="hero-title text-6xl md:text-[7.5rem] font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-slate-900 reveal-up">
+                    Shaping<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600">The Future</span><br>Of Business.
+                </h1>
+                <p class="text-slate-600 max-w-md reveal-up text-lg leading-relaxed">
+                    A multi-disciplinary powerhouse licensed for IT, Events, and Strategic Consulting. We turn potential into performance.
+                </p>
+            </div>
+
+            <div class="hidden md:block h-full relative neon-stream-container reveal-up">
+                <div class="floating-card fc-blue speed-med" style="left: 5%; animation-delay: 0s;">IT Consultancy</div>
+                <div class="floating-card fc-purple speed-slow" style="left: 5%; animation-delay: 3s;">Decor Design</div>
+                <div class="floating-card fc-orange speed-fast" style="left: 5%; animation-delay: 6s;">Events</div>
+                <div class="floating-card fc-orange speed-fast" style="left: 30%; animation-delay: 1s;">Marketing & PR</div>
+                <div class="floating-card fc-blue speed-slow" style="left: 30%; animation-delay: 4s;">Cybersecurity</div>
+                <div class="floating-card fc-green speed-med" style="left: 30%; animation-delay: 7s;">Real Estate</div>
+                <div class="floating-card fc-green speed-slow" style="left: 55%; animation-delay: 2s;">Statistics</div>
+                <div class="floating-card fc-orange speed-med" style="left: 55%; animation-delay: 5s;">Exhibitions</div>
+                <div class="floating-card fc-blue speed-fast" style="left: 55%; animation-delay: 8s;">Cloud Data</div>
+                <div class="floating-card fc-purple speed-med" style="left: 80%; animation-delay: 0.5s;">HR Dev</div>
+                <div class="floating-card fc-blue speed-fast" style="left: 80%; animation-delay: 3.5s;">AI Solutions</div>
+                <div class="floating-card fc-green speed-med" style="left: 80%; animation-delay: 6.5s;">Feasibility</div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="flex flex-col md:flex-row h-screen relative z-20" data-bgcolor="#dbeafe">
+        <div class="md:w-1/2 p-12 md:p-24 flex flex-col justify-center relative">
+            <span class="text-blue-700 font-mono text-xs uppercase tracking-widest mb-6 reveal-up font-bold">Who We Are</span>
+            <h2 class="text-5xl md:text-7xl font-bold font-display uppercase leading-tight mb-8 reveal-up text-slate-900">Bridging<br>The Gap.</h2>
+            <p class="text-slate-700 text-lg leading-loose max-w-md mb-12 reveal-up">
+                We are a strategic partner accredited by the <strong class="text-slate-900 border-b-2 border-blue-400">Civil Service Commission</strong>. We combine local expertise with global standards.
+            </p>
+            <div class="grid grid-cols-2 gap-8 mt-4 reveal-up">
+                <div><h3 class="text-4xl font-bold font-display text-blue-700">20+</h3><p class="text-xs uppercase tracking-widest text-slate-600 mt-2">Sectors</p></div>
+                <div><h3 class="text-4xl font-bold font-display text-slate-900">100%</h3><p class="text-xs uppercase tracking-widest text-slate-600 mt-2">Accredited</p></div>
+            </div>
+        </div>
+        <div class="md:w-1/2 h-[50vh] md:h-auto relative overflow-hidden bg-white">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105" id="split-image" alt="Architecture">
+        </div>
+    </section>
+
+    <div class="py-6 bg-blue-600 border-y border-blue-700 relative z-30 marquee-container text-white shadow-xl">
+        <div class="marquee-content text-sm md:text-base font-mono font-bold tracking-widest uppercase">
+            <span>• Civil Service Commission Accredited</span> <span class="mx-8 text-blue-200">//</span>
+            <span>• The Public Authority for Applied Education</span> <span class="mx-8 text-blue-200">//</span>
+            <span>• New Kuwait Vision 2035</span> <span class="mx-8 text-blue-200">//</span>
+            <span>• ISO Certified Standards</span> <span class="mx-8 text-blue-200">//</span>
+        </div>
+    </div>
+
+    <section id="tracks" class="h-screen relative overflow-hidden flex items-center z-20" data-bgcolor="#ffedd5">
+        <div class="absolute top-10 left-6 md:left-24 z-10"><span class="text-xs font-bold uppercase tracking-widest border-b border-orange-400 pb-1 text-orange-900">Our Ecosystem</span></div>
+        <div class="flex gap-4 md:gap-8 px-6 md:px-24" id="horizontal-wrapper">
+            <div class="min-w-[300px] flex flex-col justify-center pr-10">
+                <h2 class="text-5xl font-bold uppercase leading-none mb-6 text-slate-900">Full<br><span class="text-orange-600">Scope.</span></h2>
+                <p class="text-slate-700 text-sm">Comprehensive solutions covering all licensed activities.</p>
+            </div>
+
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-blue-300 bg-blue-900/30 px-2 py-1 rounded">REF: 7490343</span><h3 class="text-2xl font-bold mt-2 text-white">IT Consultancy</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-orange-300 bg-orange-900/30 px-2 py-1 rounded">REF: 823002</span><h3 class="text-2xl font-bold mt-2 text-white">Conference Mgmt</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-purple-300 bg-purple-900/30 px-2 py-1 rounded">REF: 731013</span><h3 class="text-2xl font-bold mt-2 text-white">Marketing & PR</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-green-300 bg-green-900/30 px-2 py-1 rounded">REF: 661902</span><h3 class="text-2xl font-bold mt-2 text-white">Investment</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-blue-300 bg-blue-900/30 px-2 py-1 rounded">REF: 854950</span><h3 class="text-2xl font-bold mt-2 text-white">Training Inst.</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-teal-300 bg-teal-900/30 px-2 py-1 rounded">REF: 7490906</span><h3 class="text-2xl font-bold mt-2 text-white">Statistics</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-indigo-300 bg-indigo-900/30 px-2 py-1 rounded">REF: 722000</span><h3 class="text-2xl font-bold mt-2 text-white">Research</h3></div>
+            </div>
+            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
+                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-pink-300 bg-pink-900/30 px-2 py-1 rounded">REF: 701017</span><h3 class="text-2xl font-bold mt-2 text-white">Decor & Art</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-slate-950 text-white pt-24 pb-10 relative z-20" data-bgcolor="#020617">
+        <div class="container mx-auto px-6 md:px-24 mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <div class="text-xl font-bold font-display uppercase tracking-tighter mb-6 flex items-center gap-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div> About Us
+                    </div>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Innovation Edge Kuwait empowers healthcare and corporate professionals with tailored training in HI&IM, focusing on data governance, informatics, and leadership.
+                    </p>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-6">Opening Hours</h4>
+                    <ul class="text-sm text-gray-400 space-y-3 font-mono">
+                        <li class="flex justify-between"><span>Mon-Fri</span> <span class="text-white">09:00 - 21:00</span></li>
+                        <li class="flex justify-between"><span>Sat</span> <span class="text-white">09:00 - 18:00</span></li>
+                        <li class="flex justify-between"><span>Sun</span> <span class="text-white">09:00 - 16:00</span></li>
+                    </ul>
+                </div>
+                <div class="md:col-span-6 flex flex-col gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Location</h4>
+                            <p class="text-gray-300 text-sm leading-relaxed">Kuwait, Al Mirqab<br>M Square Complex, Plot 3<br>Plot 16, 6th Floor</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Contact</h4>
+                            <a href="tel:96599573375" class="block text-gray-300 hover:text-white transition-colors text-sm mb-2">(+965) 9957 3375</a>
+                            <a href="mailto:contact@innovationedges.com" class="block text-gray-300 hover:text-white transition-colors text-sm">contact@innovationedges.com</a>
+                        </div>
+                    </div>
+                    <div class="w-full h-48 rounded-xl overflow-hidden border border-white/10 relative group bg-slate-900">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="map-style"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-900 pt-8 px-6 md:px-24 flex justify-between items-end">
+            <span class="text-[12vw] font-bold text-white/5 leading-none select-none">EDGE</span>
+            <span class="text-xs text-slate-500 mb-4">© 2026 Innovation Edge. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('[data-bgcolor]').forEach((section) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 }),
+                onEnterBack: () => gsap.to("body", { backgroundColor: section.dataset.bgcolor, duration: 0.8 })
+            });
+        });
+
+        gsap.utils.toArray('.reveal-up').forEach((elem, i) => {
+            gsap.to(elem, {
+                scrollTrigger: { trigger: elem, start: "top 85%" },
+                y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: i * 0.05
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
+              .to(".loader", { height: 0, duration: 1, ease: "power4.inOut" });
+        });
+
+        const section = document.getElementById("tracks");
+        const wrapper = document.getElementById("horizontal-wrapper");
+        if (section && wrapper) {
+            gsap.to(wrapper, {
+                x: () => -(wrapper.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: { trigger: section, pin: true, scrub: 1, end: () => "+=" + wrapper.scrollWidth }
+            });
+        }
+    </script>
+</body>
+</html>

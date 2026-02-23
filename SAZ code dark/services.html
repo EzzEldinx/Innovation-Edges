@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Innovation Edge</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <style>
+        :root { --bg-dark: #050505; --text-light: #e5e5e5; --accent: #3b82f6; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-light); overflow-x: hidden; }
+        h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* Background Effects */
+        .ambient-light { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; z-index: -1; pointer-events: none; background: #020204; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: float 20s infinite ease-in-out alternate; }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #1e3a8a 0%, transparent 70%); animation-duration: 25s; }
+        .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #312e81 0%, transparent 70%); animation-duration: 30s; animation-delay: -5s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
+        
+        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://grainy-gradients.vercel.app/noise.svg'); opacity: 0.04; pointer-events: none; z-index: 0; }
+        .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+
+        /* --- STICKY SCROLL STYLES --- */
+        .service-section { display: flex; align-items: flex-start; position: relative; }
+        
+        /* Left Content */
+        .service-content { width: 50%; }
+        .service-block { 
+            height: 100vh; 
+            display: flex; flex-direction: column; justify-content: center; 
+            padding: 4rem 6rem; 
+            opacity: 0.2; transition: opacity 0.5s ease-in-out; 
+            border-left: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .service-block.active { opacity: 1; }
+        
+        /* NEW: Styled Big Numbers */
+        .big-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 8rem;
+            font-weight: 700;
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            line-height: 1;
+            /* Outline Style */
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15);
+            color: transparent;
+            z-index: -1;
+            opacity: 0.6; /* Increased visibility */
+        }
+        .service-block.active .big-number {
+            -webkit-text-stroke: 2px rgba(59, 130, 246, 0.3); /* Blue tint when active */
+            opacity: 1;
+        }
+
+        /* Right Visuals */
+        .service-visuals { 
+            width: 50%; height: 100vh; position: sticky; top: 0; 
+            display: flex; align-items: center; justify-content: center; 
+            overflow: hidden; border-left: 1px solid rgba(255,255,255,0.1);
+            background: #000;
+        }
+        
+        .visual-card {
+            position: absolute; width: 100%; height: 100%;
+            opacity: 0; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .visual-card.active { opacity: 1; z-index: 2; }
+        
+        .visual-img { width: 100%; height: 100%; object-fit: cover; transition: transform 2s ease; filter: brightness(0.6); }
+        .visual-card.active .visual-img { transform: scale(1.05); filter: brightness(0.9); }
+        
+        .img-overlay-text {
+            position: absolute; bottom: 3rem; left: 3rem; z-index: 10;
+            opacity: 0; transform: translateY(20px); transition: all 0.5s 0.3s;
+        }
+        .visual-card.active .img-overlay-text { opacity: 1; transform: translateY(0); }
+
+        /* Dark Map */
+        .dark-map { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
+        .dark-map:hover { filter: grayscale(0%) invert(0%); }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <div class="loader text-white font-display text-4xl font-bold tracking-tighter">
+        <span class="loader-text">SERVICES</span>
+    </div>
+
+    <div class="ambient-light">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <div class="noise"></div>
+
+    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-40 mix-blend-difference text-white">
+        <a href="index.html" class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer">
+            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_15px_#3b82f6]"></div>
+            Innovation Edge
+        </a>
+        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-medium opacity-80">
+            <a href="index.html" class="hover:text-blue-400 transition-colors">Home</a>
+            <a href="#" class="text-blue-500 transition-colors">Services</a>
+            <a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+        <a href="#contact" class="border border-white/20 px-6 py-2 rounded-full text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm">
+            Partner With Us
+        </a>
+    </nav>
+
+    <section class="h-[50vh] flex flex-col justify-end px-6 md:px-24 pb-12 border-b border-white/5">
+        <span class="text-blue-500 font-mono text-xs uppercase tracking-widest mb-4 reveal-text">Our Expertise</span>
+        <h1 class="text-6xl md:text-8xl font-bold font-display uppercase leading-[0.9] reveal-text">
+            Mastery In<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-gray-800">Motion.</span>
+        </h1>
+    </section>
+
+    <section class="service-section bg-black/20" id="services-wrapper">
+        
+        <div class="service-content">
+            
+            <div class="service-block active" data-index="0">
+                <div class="big-number">01</div> <div class="relative pt-20">
+                    <h3 class="text-4xl md:text-5xl font-bold font-display mb-6">Workshops & <br>Training</h3>
+                    <p class="text-gray-300 text-lg leading-loose mb-10 max-w-lg">
+                        Interactive, hands-on sessions designed to tackle real-world healthcare data challenges. We focus on HI&IM (Health Informatics) regulations specific to Kuwait.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 max-w-md">
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">Data Governance</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">Compliance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block" data-index="1">
+                <div class="big-number">02</div> <div class="relative pt-20">
+                    <h3 class="text-4xl md:text-5xl font-bold font-display mb-6">Strategic <br>Consultation</h3>
+                    <p class="text-gray-300 text-lg leading-loose mb-10 max-w-lg">
+                        Tailored advice for healthcare institutions looking to modernize their infrastructure. We bridge the gap between medical needs and IT capabilities.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 max-w-md">
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">System Audits</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">Feasibility</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block" data-index="2">
+                <div class="big-number">03</div> <div class="relative pt-20">
+                    <h3 class="text-4xl md:text-5xl font-bold font-display mb-6">Conference <br>Management</h3>
+                    <p class="text-gray-300 text-lg leading-loose mb-10 max-w-lg">
+                        End-to-end organization of medical and scientific forums. From venue selection to speaker coordination, we ensure impactful events.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 max-w-md">
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">Logistics</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-4 border border-white/10 rounded-xl bg-white/5">
+                            <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                            <span class="text-xs uppercase tracking-wider font-bold">Speakers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-block" data-index="3">
+                <div class="big-number">04</div> <div class="relative pt-20">
+                    <h3 class="text-4xl md:text-5xl font-bold font-display mb-6">Professional <br>Courses</h3>
+                    <p class="text-gray-300 text-lg leading-loose mb-10 max-w-lg">
+                        Flexible learning paths including Online and Face-to-Face options. Get certified in specialized domains recognized by the CSC.
+                    </p>
+                    <a href="#contact" class="inline-block mt-4 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-blue-500 hover:text-white transition-all shadow-lg hover:shadow-blue-500/50">
+                        Enroll Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-visuals bg-black hidden md:flex">
+            
+            <div class="visual-card active" id="visual-0">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Workshop">
+                <div class="img-overlay-text">
+                    <h4 class="text-3xl font-display font-bold">Interactive Learning</h4>
+                    <p class="text-sm font-mono text-gray-400 mt-2">REAL-WORLD SIMULATION</p>
+                </div>
+            </div>
+
+            <div class="visual-card" id="visual-1">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Consultation">
+                <div class="img-overlay-text">
+                    <h4 class="text-3xl font-display font-bold">Expert Guidance</h4>
+                    <p class="text-sm font-mono text-gray-400 mt-2">DATA DRIVEN DECISIONS</p>
+                </div>
+            </div>
+
+            <div class="visual-card" id="visual-2">
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop" class="visual-img" alt="Conference">
+                <div class="img-overlay-text">
+                    <h4 class="text-3xl font-display font-bold">Global Events</h4>
+                    <p class="text-sm font-mono text-gray-400 mt-2">IMPACTFUL GATHERINGS</p>
+                </div>
+            </div>
+
+            <div class="visual-card" id="visual-3">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" class="visual-img" alt="Courses">
+                <div class="img-overlay-text">
+                    <h4 class="text-3xl font-display font-bold">Certified Growth</h4>
+                    <p class="text-sm font-mono text-gray-400 mt-2">CSC RECOGNIZED</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-black text-white pt-20 border-t border-white/10 relative z-20">
+        <div class="container mx-auto px-6 md:px-24 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <div class="text-xl font-bold font-display uppercase tracking-tighter mb-6 flex items-center gap-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div> About Us
+                    </div>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Innovation Edge Kuwait empowers healthcare and corporate professionals with tailored training in HI&IM.
+                    </p>
+                </div>
+                <div class="md:col-span-2">
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-6">Opening Hours</h4>
+                    <ul class="text-sm text-gray-400 space-y-3 font-mono">
+                        <li class="flex justify-between"><span>Mon-Fri</span> <span class="text-white">09:00 - 21:00</span></li>
+                        <li class="flex justify-between"><span>Sat</span> <span class="text-white">09:00 - 18:00</span></li>
+                    </ul>
+                </div>
+                <div class="md:col-span-6 flex flex-col gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Location</h4>
+                            <p class="text-gray-300 text-sm leading-relaxed">Kuwait, Al Mirqab<br>M Square Complex</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Contact</h4>
+                            <a href="tel:96599573375" class="block text-gray-300 hover:text-white transition-colors text-sm mb-2">(+965) 9957 3375</a>
+                            <a href="mailto:contact@innovationedges.com" class="block text-gray-300 hover:text-white transition-colors text-sm">contact@innovationedges.com</a>
+                        </div>
+                    </div>
+                    <div class="w-full h-48 rounded-xl overflow-hidden border border-white/20 relative group">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.303967803626!2d47.9754!3d29.3705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf84ba8b693247%3A0x6b4f770450503e9!2sAl%20Mirqab!5e0!3m2!1sen!2skw!4v1700000000000!5m2!1sen!2skw" width="100%" height="100%" style="border:0;" class="dark-map"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/10 bg-neutral-900/50 py-6">
+            <div class="container mx-auto px-6 md:px-24 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 uppercase tracking-widest">
+                <div>© 2025 Innovation Edge. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Preloader & Hero
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to(".loader-text", { opacity: 0, duration: 0.5, delay: 0.5 })
+              .to(".loader", { height: 0, duration: 1, ease: "power4.inOut" })
+              .from(".reveal-text", { y: 100, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.5");
+        });
+
+        // STICKY SCROLL LOGIC
+        const serviceBlocks = document.querySelectorAll('.service-block');
+        const visualCards = document.querySelectorAll('.visual-card');
+
+        ScrollTrigger.create({
+            trigger: "#services-wrapper",
+            start: "top top",
+            end: "bottom bottom",
+            pin: ".service-visuals",
+        });
+
+        serviceBlocks.forEach((block, index) => {
+            ScrollTrigger.create({
+                trigger: block,
+                start: "top center",
+                end: "bottom center",
+                onEnter: () => updateVisual(index),
+                onEnterBack: () => updateVisual(index)
+            });
+        });
+
+        function updateVisual(index) {
+            serviceBlocks.forEach((b, i) => {
+                b.classList.toggle('active', i === index);
+            });
+            visualCards.forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+        }
+    </script>
+</body>
+</html>
