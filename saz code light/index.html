@@ -18,7 +18,7 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #ffffff; 
+            background-color: #f8fafc; 
             color: #0f172a; 
             overflow-x: hidden; 
             transition: background-color 0.6s ease-in-out;
@@ -31,47 +31,82 @@
         .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .reveal-up { opacity: 0; transform: translateY(50px); }
 
+        /* --- 🌟 AURORA BACKGROUND EFFECT 🌟 --- */
+        .aurora-container {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden; z-index: 0; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px);
+            opacity: 0.6; mix-blend-mode: multiply;
+            animation: move-aurora 20s infinite alternate ease-in-out;
+        }
+        .aurora-blue { background: #93c5fd; width: 55vw; height: 55vh; top: -10%; left: -10%; animation-delay: 0s; }
+        .aurora-purple { background: #c4b5fd; width: 50vw; height: 50vh; top: 10%; right: -10%; animation-delay: -5s; }
+        .aurora-orange { background: #fdba74; width: 45vw; height: 45vh; bottom: -10%; left: 20%; animation-delay: -10s; }
+
+        @keyframes move-aurora {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(8%, 12%) scale(1.15) rotate(10deg); }
+            100% { transform: translate(-5%, -8%) scale(0.9) rotate(-5deg); }
+        }
+
         /* --- 🌟 HERO BACKGROUND GRID 🌟 --- */
         .hero-bg-grid {
             position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; z-index: 0;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: 1; pointer-events: none;
         }
 
-        /* --- WATERFALL ANIMATION (FULL WIDTH) --- */
+        /* --- 🌟 SPLIT WATERFALL ANIMATION 🌟 --- */
         .neon-stream-container { 
-            position: absolute; bottom: 40px; left: 0; height: 45vh; width: 100%; overflow: hidden; 
-            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent); 
-            z-index: 0; pointer-events: none;
+            position: absolute; top: 0; left: 0; height: 100vh; width: 100%; overflow: hidden; 
+            mask-image: linear-gradient(to bottom, transparent 2%, black 15%, black 80%, transparent 100%); 
+            z-index: 2; pointer-events: none;
         }
         .floating-card {
             position: absolute; padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(0,0,0,0.08);
             backdrop-filter: blur(4px); border-radius: 8px;
             font-family: 'Space Grotesk', sans-serif; font-size: 12px; text-transform: uppercase;
             letter-spacing: 0.5px; color: #0f172a; font-weight: 800;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); white-space: nowrap; opacity: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); white-space: nowrap; opacity: 0;
         }
         .fc-blue { border-left: 4px solid #2563eb; color: #1e40af; }
         .fc-orange { border-left: 4px solid #f97316; color: #9a3412; }
         .fc-purple { border-left: 4px solid #9333ea; color: #6b21a8; }
         .fc-green { border-left: 4px solid #10b981; color: #065f46; }
 
-        @keyframes fall { 0% { top: -10%; opacity: 0; transform: translateY(-20px); } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 110%; opacity: 0; transform: translateY(0); } }
-        .speed-fast { animation: fall 7s linear infinite; }
-        .speed-med { animation: fall 10s linear infinite; }
-        .speed-slow { animation: fall 14s linear infinite; }
+        /* Fall from top (Sides only) */
+        @keyframes fall-side { 
+            0% { top: -10%; opacity: 0; transform: translateY(-20px); } 
+            10% { opacity: 1; } 90% { opacity: 1; } 
+            100% { top: 110%; opacity: 0; transform: translateY(20px); } 
+        }
+        /* Fall from below the box (Center only) */
+        @keyframes fall-bottom { 
+            0% { top: 72%; opacity: 0; transform: translateY(-10px); } 
+            15% { opacity: 1; } 85% { opacity: 1; } 
+            100% { top: 110%; opacity: 0; transform: translateY(20px); } 
+        }
+
+        .anim-side { animation-name: fall-side; }
+        .anim-bottom { animation-name: fall-bottom; }
+
+        .speed-fast { animation-duration: 8s; animation-timing-function: linear; animation-iteration-count: infinite; }
+        .speed-med { animation-duration: 12s; animation-timing-function: linear; animation-iteration-count: infinite; }
+        .speed-slow { animation-duration: 16s; animation-timing-function: linear; animation-iteration-count: infinite; }
         
         /* --- 🌟 HERO TICKER TAPE (SHREET) 🌟 --- */
         .hero-ticker { 
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; 
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 45px; 
             background: #0f172a; color: #94a3b8; display: flex; align-items: center; overflow: hidden; 
             font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 50; 
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-        .ticker-track { display: flex; animation: scroll-ticker 20s linear infinite; white-space: nowrap; }
-        .ticker-item { padding: 0 40px; }
+        .ticker-track { display: flex; animation: scroll-ticker 25s linear infinite; white-space: nowrap; }
+        .ticker-item { padding: 0 40px; letter-spacing: 1px; }
         .ticker-highlight { color: #3b82f6; font-weight: bold; }
         @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -88,57 +123,62 @@
 
     <div class="loader text-slate-900 font-display text-4xl font-bold tracking-tighter"><span class="loader-text">INNOVATION EDGE</span></div>
 
-    <nav class="fixed top-0 w-full p-6 md:p-8 flex justify-between items-center z-50 text-slate-900 bg-white/70 backdrop-blur-lg border-b border-slate-200 shadow-sm transition-all duration-300">
-        <a href="index.html" class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer group">
+    <nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1200px] px-6 py-4 flex justify-between items-center z-50 text-slate-900 bg-white/60 backdrop-blur-xl border border-white/50 shadow-xl shadow-slate-200/50 rounded-full transition-all duration-300">
+        <a href="index.html" class="text-lg md:text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer group">
             <div class="w-3 h-3 bg-blue-600 rounded-sm transition-transform duration-300 group-hover:rotate-90 group-hover:scale-125"></div> 
             Innovation Edge
         </a>
-        <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.2em] font-bold opacity-90 font-display">
-            <a href="index.html" class="relative overflow-hidden group">
+        <div class="hidden md:flex gap-8 lg:gap-12 text-[11px] uppercase tracking-[0.2em] font-bold opacity-90 font-display">
+            <a href="index.html" class="relative overflow-hidden group py-1">
                 <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Home</span>
-                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Home</span>
+                <span class="absolute left-0 top-1 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Home</span>
             </a>
-            <a href="services.html" class="relative overflow-hidden group">
+            <a href="services.html" class="relative overflow-hidden group py-1">
                 <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Services</span>
-                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Services</span>
+                <span class="absolute left-0 top-1 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Services</span>
             </a>
-            <a href="events.html" class="relative overflow-hidden group">
+            <a href="events.html" class="relative overflow-hidden group py-1">
                 <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Events</span>
-                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Events</span>
+                <span class="absolute left-0 top-1 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Events</span>
             </a>
-            <a href="#contact" class="relative overflow-hidden group">
+            <a href="#contact" class="relative overflow-hidden group py-1">
                 <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Contact</span>
-                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Contact</span>
+                <span class="absolute left-0 top-1 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Contact</span>
             </a>
         </div>
-        <a href="#contact" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-mono font-bold tracking-widest text-white bg-slate-900 rounded-full group text-[10px] uppercase shadow-lg">
+        <a href="#contact" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-mono font-bold tracking-widest text-white bg-slate-900 rounded-full group text-[10px] uppercase shadow-md hover:shadow-lg transition-shadow">
             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-600 rounded-full group-hover:w-56 group-hover:h-56"></span>
             <span class="relative flex items-center gap-2">Partner With Us</span>
         </a>
     </nav>
 
-    <header class="relative min-h-screen px-6 md:px-24 overflow-hidden flex flex-col pt-[160px] pb-20" data-bgcolor="#ffffff">
+    <header class="relative min-h-screen px-4 md:px-12 overflow-hidden flex flex-col justify-center items-center pb-12" data-bgcolor="#f8fafc">
         
-        <div class="hero-bg-grid opacity-60"></div>
+        <div class="aurora-container">
+            <div class="aurora-blob aurora-blue"></div>
+            <div class="aurora-blob aurora-purple"></div>
+            <div class="aurora-blob aurora-orange"></div>
+        </div>
 
-        <div class="z-20 flex flex-col items-center justify-start text-center relative w-full max-w-4xl mx-auto reveal-up">
+        <div class="hero-bg-grid"></div>
+
+        <div class="z-20 flex flex-col items-center text-center relative w-full max-w-[1100px] mx-auto reveal-up mt-10">
             
-            <div class="absolute -top-10 -left-10 w-72 h-72 bg-blue-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0"></div>
-            <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0" style="animation-delay: 2s;"></div>
-
-            <div class="bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl p-10 md:p-16 rounded-[2.5rem] relative overflow-hidden z-10 w-full">
+            <div class="bg-slate-900/85 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-slate-900/40 p-10 md:py-16 md:px-20 rounded-[2.5rem] relative overflow-hidden z-10 w-full">
                 
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl"></div>
+                <div class="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
 
                 <div class="overflow-hidden mb-6 relative z-10">
                     <div class="flex items-center gap-4 justify-center">
-                        <span class="px-3 py-1 border border-white/10 bg-white/5 backdrop-blur-sm rounded-full text-[10px] text-slate-300 uppercase tracking-widest font-bold">EST. 2024</span>
+                        <span class="px-4 py-1.5 border border-white/10 bg-white/5 backdrop-blur-sm rounded-full text-[10px] text-slate-300 uppercase tracking-widest font-bold">EST. 2024</span>
                         <span class="text-xs text-slate-400 uppercase tracking-widest font-mono">Kuwait City, Al-Mirqab</span>
                     </div>
                 </div>
                 
-                <h1 class="hero-title text-[4rem] md:text-[6.5rem] font-bold uppercase leading-[0.95] tracking-tighter mb-6 text-white relative z-10">
-                    Innovation <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400">at Every Edge</span><br>of Your Business.
+                <h1 class="font-display font-bold uppercase tracking-tighter mb-6 relative z-10 text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[6.5rem] leading-[1]">
+                    <span class="text-white block">INNOVATION AT</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 block pb-1">EVERY EDGE</span>
+                    <span class="text-white block">OF YOUR BUSINESS.</span>
                 </h1>
                 
                 <p class="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed relative z-10">
@@ -147,21 +187,24 @@
             </div>
         </div>
 
-        <div class="neon-stream-container reveal-up pt-10">
-            <div class="floating-card fc-blue speed-med" style="left: 2%; animation-delay: 0s;">IT Consultancy</div>
-            <div class="floating-card fc-orange speed-fast" style="left: 8%; animation-delay: 4s;">Events</div>
-            <div class="floating-card fc-purple speed-slow" style="left: 15%; animation-delay: 1s;">Decor Design</div>
-            <div class="floating-card fc-green speed-med" style="left: 22%; animation-delay: 5s;">Real Estate</div>
-            <div class="floating-card fc-blue speed-fast" style="left: 30%; animation-delay: 2s;">Cybersecurity</div>
-            <div class="floating-card fc-orange speed-slow" style="left: 38%; animation-delay: 7s;">Marketing & PR</div>
-            <div class="floating-card fc-purple speed-med" style="left: 45%; animation-delay: 0.5s;">Exhibitions</div>
-            <div class="floating-card fc-green speed-fast" style="left: 52%; animation-delay: 6s;">Statistics</div>
-            <div class="floating-card fc-blue speed-slow" style="left: 60%; animation-delay: 3s;">Cloud Data</div>
-            <div class="floating-card fc-orange speed-med" style="left: 68%; animation-delay: 8s;">AI Solutions</div>
-            <div class="floating-card fc-purple speed-fast" style="left: 75%; animation-delay: 1.5s;">HR Dev</div>
-            <div class="floating-card fc-green speed-slow" style="left: 82%; animation-delay: 5.5s;">Feasibility</div>
-            <div class="floating-card fc-blue speed-med" style="left: 90%; animation-delay: 2.5s;">Data Gov</div>
-            <div class="floating-card fc-orange speed-fast" style="left: 95%; animation-delay: 6.8s;">Compliance</div>
+        <div class="neon-stream-container reveal-up">
+            
+            <div class="floating-card fc-blue anim-side speed-med" style="left: 3%; animation-delay: 0s;">IT Consultancy</div>
+            <div class="floating-card fc-orange anim-side speed-fast" style="left: 10%; animation-delay: 3s;">Events</div>
+            <div class="floating-card fc-purple anim-side speed-slow" style="left: 16%; animation-delay: 1s;">Decor Design</div>
+            <div class="floating-card fc-green anim-side speed-med" style="left: 23%; animation-delay: 5s;">Real Estate</div>
+            
+            <div class="floating-card fc-purple anim-side speed-med" style="left: 77%; animation-delay: 0.5s;">Exhibitions</div>
+            <div class="floating-card fc-green anim-side speed-fast" style="left: 84%; animation-delay: 4s;">Statistics</div>
+            <div class="floating-card fc-blue anim-side speed-slow" style="left: 90%; animation-delay: 2s;">Cloud Data</div>
+            <div class="floating-card fc-orange anim-side speed-med" style="left: 95%; animation-delay: 6s;">AI Solutions</div>
+
+            <div class="floating-card fc-blue anim-bottom speed-fast" style="left: 32%; animation-delay: 1.5s;">Cybersecurity</div>
+            <div class="floating-card fc-orange anim-bottom speed-med" style="left: 42%; animation-delay: 0.5s;">Marketing & PR</div>
+            <div class="floating-card fc-purple anim-bottom speed-slow" style="left: 55%; animation-delay: 3.5s;">HR Dev</div>
+            <div class="floating-card fc-green anim-bottom speed-fast" style="left: 65%; animation-delay: 2s;">Feasibility</div>
+            <div class="floating-card fc-blue anim-bottom speed-med" style="left: 48%; animation-delay: 5s;">Data Gov</div>
+
         </div>
 
         <div class="hero-ticker">
