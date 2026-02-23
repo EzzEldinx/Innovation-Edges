@@ -9,7 +9,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -21,21 +21,33 @@
             background-color: #ffffff; 
             color: #0f172a; 
             overflow-x: hidden; 
-            transition: background-color 0.6s ease-in-out; /* Faster transition to feel the color pop */
+            transition: background-color 0.6s ease-in-out;
         }
         
         h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
 
         .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .reveal-up { opacity: 0; transform: translateY(50px); }
 
-        /* --- WATERFALL ANIMATION (INTENSE) --- */
-        .neon-stream-container { position: relative; height: 100%; width: 100%; overflow: hidden; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); }
+        /* --- 🌟 HERO BACKGROUND GRID 🌟 --- */
+        .hero-bg-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: 0;
+        }
+
+        /* --- WATERFALL ANIMATION (FULL WIDTH) --- */
+        .neon-stream-container { 
+            position: absolute; bottom: 40px; left: 0; height: 45vh; width: 100%; overflow: hidden; 
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent); 
+            z-index: 0; pointer-events: none;
+        }
         .floating-card {
             position: absolute; padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.9); /* More opaque to pop against colors */
-            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0,0,0,0.1);
             backdrop-filter: blur(4px); border-radius: 8px;
             font-family: 'Space Grotesk', sans-serif; font-size: 12px; text-transform: uppercase;
             letter-spacing: 0.5px; color: #0f172a; font-weight: 800;
@@ -46,72 +58,128 @@
         .fc-purple { border-left: 4px solid #9333ea; color: #6b21a8; }
         .fc-green { border-left: 4px solid #10b981; color: #065f46; }
 
-        @keyframes fall { 
-            0% { top: -10%; opacity: 0; transform: translateY(-20px); } 
-            10% { opacity: 1; } 90% { opacity: 1; } 
-            100% { top: 110%; opacity: 0; transform: translateY(0); } 
-        }
+        @keyframes fall { 0% { top: -10%; opacity: 0; transform: translateY(-20px); } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 110%; opacity: 0; transform: translateY(0); } }
         .speed-fast { animation: fall 7s linear infinite; }
         .speed-med { animation: fall 10s linear infinite; }
         .speed-slow { animation: fall 14s linear infinite; }
         
-        /* Map & Footer */
-        .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
-        .map-style:hover { filter: grayscale(0%) invert(0%); }
+        /* --- 🌟 HERO TICKER TAPE (SHREET) 🌟 --- */
+        .hero-ticker { 
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; 
+            background: #0f172a; color: #94a3b8; display: flex; align-items: center; overflow: hidden; 
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 50; 
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .ticker-track { display: flex; animation: scroll-ticker 20s linear infinite; white-space: nowrap; }
+        .ticker-item { padding: 0 40px; }
+        .ticker-highlight { color: #3b82f6; font-weight: bold; }
+        @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- MARQUEE FOR ABOUT SECTION --- */
         .marquee-container { overflow: hidden; white-space: nowrap; }
         .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
+        .map-style:hover { filter: grayscale(0%) invert(0%); }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-200 selection:text-blue-900">
 
     <div class="loader text-slate-900 font-display text-4xl font-bold tracking-tighter"><span class="loader-text">INNOVATION EDGE</span></div>
 
-    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-40 text-slate-900 transition-colors duration-300">
-        <div class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2">
-            <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse shadow-lg shadow-blue-200"></div> Innovation Edge
+    <nav class="fixed top-0 w-full p-6 md:p-8 flex justify-between items-center z-50 text-slate-900 bg-white/70 backdrop-blur-lg border-b border-slate-200 shadow-sm transition-all duration-300">
+        <a href="index.html" class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer group">
+            <div class="w-3 h-3 bg-blue-600 rounded-sm transition-transform duration-300 group-hover:rotate-90 group-hover:scale-125"></div> 
+            Innovation Edge
+        </a>
+        <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.2em] font-bold opacity-90 font-display">
+            <a href="index.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Home</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Home</span>
+            </a>
+            <a href="services.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Services</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Services</span>
+            </a>
+            <a href="events.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Events</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Events</span>
+            </a>
+            <a href="#contact" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Contact</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-blue-600">Contact</span>
+            </a>
         </div>
-        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-bold opacity-80">
-            <a href="#about" class="hover:text-blue-600 transition-colors">Vision</a>
-            <a href="#tracks" class="hover:text-blue-600 transition-colors">Expertise</a>
-            <a href="services.html" class="hover:text-blue-600 transition-colors">Services</a>
-            <a href="#contact" class="hover:text-blue-600 transition-colors">Contact</a>
-        </div>
-        <a href="#contact" class="border border-slate-900/10 bg-white/50 px-6 py-2 rounded-full text-[10px] uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm">Partner With Us</a>
+        <a href="#contact" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-mono font-bold tracking-widest text-white bg-slate-900 rounded-full group text-[10px] uppercase shadow-lg">
+            <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-600 rounded-full group-hover:w-56 group-hover:h-56"></span>
+            <span class="relative flex items-center gap-2">Partner With Us</span>
+        </a>
     </nav>
 
-    <header class="relative h-screen px-6 md:px-24 overflow-hidden flex items-center" data-bgcolor="#ffffff">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 h-full">
-            <div class="z-10 flex flex-col justify-center">
-                <div class="overflow-hidden mb-8">
-                    <div class="flex items-center gap-4 reveal-up">
-                        <span class="px-3 py-1 border border-slate-300 bg-slate-100 rounded-full text-[10px] text-slate-600 uppercase tracking-widest">EST. 2024</span>
-                        <span class="text-xs text-slate-500 uppercase tracking-widest">Kuwait City, Al-Mirqab</span>
+    <header class="relative min-h-screen px-6 md:px-24 overflow-hidden flex flex-col pt-[160px] pb-20" data-bgcolor="#ffffff">
+        
+        <div class="hero-bg-grid opacity-60"></div>
+
+        <div class="z-20 flex flex-col items-center justify-start text-center relative w-full max-w-4xl mx-auto reveal-up">
+            
+            <div class="absolute -top-10 -left-10 w-72 h-72 bg-blue-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0"></div>
+            <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0" style="animation-delay: 2s;"></div>
+
+            <div class="bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl p-10 md:p-16 rounded-[2.5rem] relative overflow-hidden z-10 w-full">
+                
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl"></div>
+
+                <div class="overflow-hidden mb-6 relative z-10">
+                    <div class="flex items-center gap-4 justify-center">
+                        <span class="px-3 py-1 border border-white/10 bg-white/5 backdrop-blur-sm rounded-full text-[10px] text-slate-300 uppercase tracking-widest font-bold">EST. 2024</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-widest font-mono">Kuwait City, Al-Mirqab</span>
                     </div>
                 </div>
-                <h1 class="hero-title text-6xl md:text-[7.5rem] font-bold uppercase leading-[0.9] tracking-tighter mb-8 text-slate-900 reveal-up">
-                    Shaping<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600">The Future</span><br>Of Business.
+                
+                <h1 class="hero-title text-[4rem] md:text-[6.5rem] font-bold uppercase leading-[0.95] tracking-tighter mb-6 text-white relative z-10">
+                    Innovation <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400">at Every Edge</span><br>of Your Business.
                 </h1>
-                <p class="text-slate-600 max-w-md reveal-up text-lg leading-relaxed">
+                
+                <p class="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed relative z-10">
                     A multi-disciplinary powerhouse licensed for IT, Events, and Strategic Consulting. We turn potential into performance.
                 </p>
             </div>
+        </div>
 
-            <div class="hidden md:block h-full relative neon-stream-container reveal-up">
-                <div class="floating-card fc-blue speed-med" style="left: 5%; animation-delay: 0s;">IT Consultancy</div>
-                <div class="floating-card fc-purple speed-slow" style="left: 5%; animation-delay: 3s;">Decor Design</div>
-                <div class="floating-card fc-orange speed-fast" style="left: 5%; animation-delay: 6s;">Events</div>
-                <div class="floating-card fc-orange speed-fast" style="left: 30%; animation-delay: 1s;">Marketing & PR</div>
-                <div class="floating-card fc-blue speed-slow" style="left: 30%; animation-delay: 4s;">Cybersecurity</div>
-                <div class="floating-card fc-green speed-med" style="left: 30%; animation-delay: 7s;">Real Estate</div>
-                <div class="floating-card fc-green speed-slow" style="left: 55%; animation-delay: 2s;">Statistics</div>
-                <div class="floating-card fc-orange speed-med" style="left: 55%; animation-delay: 5s;">Exhibitions</div>
-                <div class="floating-card fc-blue speed-fast" style="left: 55%; animation-delay: 8s;">Cloud Data</div>
-                <div class="floating-card fc-purple speed-med" style="left: 80%; animation-delay: 0.5s;">HR Dev</div>
-                <div class="floating-card fc-blue speed-fast" style="left: 80%; animation-delay: 3.5s;">AI Solutions</div>
-                <div class="floating-card fc-green speed-med" style="left: 80%; animation-delay: 6.5s;">Feasibility</div>
+        <div class="neon-stream-container reveal-up pt-10">
+            <div class="floating-card fc-blue speed-med" style="left: 2%; animation-delay: 0s;">IT Consultancy</div>
+            <div class="floating-card fc-orange speed-fast" style="left: 8%; animation-delay: 4s;">Events</div>
+            <div class="floating-card fc-purple speed-slow" style="left: 15%; animation-delay: 1s;">Decor Design</div>
+            <div class="floating-card fc-green speed-med" style="left: 22%; animation-delay: 5s;">Real Estate</div>
+            <div class="floating-card fc-blue speed-fast" style="left: 30%; animation-delay: 2s;">Cybersecurity</div>
+            <div class="floating-card fc-orange speed-slow" style="left: 38%; animation-delay: 7s;">Marketing & PR</div>
+            <div class="floating-card fc-purple speed-med" style="left: 45%; animation-delay: 0.5s;">Exhibitions</div>
+            <div class="floating-card fc-green speed-fast" style="left: 52%; animation-delay: 6s;">Statistics</div>
+            <div class="floating-card fc-blue speed-slow" style="left: 60%; animation-delay: 3s;">Cloud Data</div>
+            <div class="floating-card fc-orange speed-med" style="left: 68%; animation-delay: 8s;">AI Solutions</div>
+            <div class="floating-card fc-purple speed-fast" style="left: 75%; animation-delay: 1.5s;">HR Dev</div>
+            <div class="floating-card fc-green speed-slow" style="left: 82%; animation-delay: 5.5s;">Feasibility</div>
+            <div class="floating-card fc-blue speed-med" style="left: 90%; animation-delay: 2.5s;">Data Gov</div>
+            <div class="floating-card fc-orange speed-fast" style="left: 95%; animation-delay: 6.8s;">Compliance</div>
+        </div>
+
+        <div class="hero-ticker">
+            <div class="ticker-track">
+                <div class="ticker-item"><span class="ticker-highlight">/// SYSTEM UPDATE:</span> NEW COURSES AVAILABLE</div>
+                <div class="ticker-item">CIVIL SERVICE COMMISSION ACCREDITED</div>
+                <div class="ticker-item"><span class="ticker-highlight">/// STRATEGY:</span> DATA GOVERNANCE PROTOCOLS</div>
+                <div class="ticker-item">NEW KUWAIT VISION 2035 READY</div>
+                <div class="ticker-item"><span class="ticker-highlight">/// STATUS:</span> ALL MODULES OPERATIONAL</div>
+                
+                <div class="ticker-item"><span class="ticker-highlight">/// SYSTEM UPDATE:</span> NEW COURSES AVAILABLE</div>
+                <div class="ticker-item">CIVIL SERVICE COMMISSION ACCREDITED</div>
+                <div class="ticker-item"><span class="ticker-highlight">/// STRATEGY:</span> DATA GOVERNANCE PROTOCOLS</div>
+                <div class="ticker-item">NEW KUWAIT VISION 2035 READY</div>
+                <div class="ticker-item"><span class="ticker-highlight">/// STATUS:</span> ALL MODULES OPERATIONAL</div>
             </div>
         </div>
+
     </header>
 
     <section id="about" class="flex flex-col md:flex-row h-screen relative z-20" data-bgcolor="#dbeafe">
@@ -164,22 +232,6 @@
                 <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
                 <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-green-300 bg-green-900/30 px-2 py-1 rounded">REF: 661902</span><h3 class="text-2xl font-bold mt-2 text-white">Investment</h3></div>
             </div>
-            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
-                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-blue-300 bg-blue-900/30 px-2 py-1 rounded">REF: 854950</span><h3 class="text-2xl font-bold mt-2 text-white">Training Inst.</h3></div>
-            </div>
-            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
-                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-teal-300 bg-teal-900/30 px-2 py-1 rounded">REF: 7490906</span><h3 class="text-2xl font-bold mt-2 text-white">Statistics</h3></div>
-            </div>
-            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
-                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-indigo-300 bg-indigo-900/30 px-2 py-1 rounded">REF: 722000</span><h3 class="text-2xl font-bold mt-2 text-white">Research</h3></div>
-            </div>
-            <div class="min-w-[400px] h-[55vh] bg-white border border-slate-200 rounded-2xl relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-all">
-                <div class="absolute bottom-0 p-8 w-full bg-gradient-to-t from-slate-900/90 to-transparent"><span class="text-[10px] font-mono text-pink-300 bg-pink-900/30 px-2 py-1 rounded">REF: 701017</span><h3 class="text-2xl font-bold mt-2 text-white">Decor & Art</h3></div>
-            </div>
         </div>
     </section>
 
@@ -191,7 +243,7 @@
                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div> About Us
                     </div>
                     <p class="text-gray-400 leading-relaxed text-sm">
-                        Innovation Edge Kuwait empowers healthcare and corporate professionals with tailored training in HI&IM, focusing on data governance, informatics, and leadership.
+                        Innovation Edge Kuwait empowers healthcare and corporate professionals with tailored training in HI&IM.
                     </p>
                 </div>
                 <div class="md:col-span-2">
@@ -199,14 +251,13 @@
                     <ul class="text-sm text-gray-400 space-y-3 font-mono">
                         <li class="flex justify-between"><span>Mon-Fri</span> <span class="text-white">09:00 - 21:00</span></li>
                         <li class="flex justify-between"><span>Sat</span> <span class="text-white">09:00 - 18:00</span></li>
-                        <li class="flex justify-between"><span>Sun</span> <span class="text-white">09:00 - 16:00</span></li>
                     </ul>
                 </div>
                 <div class="md:col-span-6 flex flex-col gap-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Location</h4>
-                            <p class="text-gray-300 text-sm leading-relaxed">Kuwait, Al Mirqab<br>M Square Complex, Plot 3<br>Plot 16, 6th Floor</p>
+                            <p class="text-gray-300 text-sm leading-relaxed">Kuwait, Al Mirqab<br>M Square Complex</p>
                         </div>
                         <div>
                             <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Contact</h4>

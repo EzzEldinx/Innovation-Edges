@@ -21,145 +21,95 @@
 
         .loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 9999; display: flex; justify-content: center; align-items: center; color: white; }
 
-        /* --- HERO: PLATINUM TEXTURED (FIXED SPACING) --- */
         .hero-section {
             position: relative; 
-            min-height: 100vh; /* Changed to min-height to avoid cutting off */
+            min-height: 100vh;
             width: 100%; overflow: hidden;
             background: #f1f5f9;
             display: flex; align-items: center;
-            padding-top: 140px; /* INCREASED PADDING TO PUSH CONTENT DOWN */
-            padding-bottom: 80px;
+            padding-top: 100px;
+            padding-bottom: 60px;
             border-bottom: 1px solid #cbd5e1;
         }
 
-        /* 1. Animated Gradient Mesh */
-        .mesh-bg {
-            position: absolute; inset: 0; z-index: 0;
-            background: 
-                radial-gradient(at 0% 0%, hsla(210, 100%, 93%, 1) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, hsla(27, 100%, 93%, 1) 0, transparent 50%);
-            opacity: 0.8;
-        }
+        .mesh-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(at 0% 0%, hsla(210, 100%, 93%, 1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(27, 100%, 93%, 1) 0, transparent 50%); opacity: 0.8; }
+        .world-map-bg { position: absolute; right: -5%; top: 50%; transform: translateY(-50%); width: 60%; height: 80%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/World_map_dots.svg'); background-repeat: no-repeat; background-size: contain; background-position: center; opacity: 0.05; pointer-events: none; z-index: 0; filter: contrast(0) brightness(0); }
+        .tech-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; }
 
-        /* 2. Dotted World Map Overlay */
-        .world-map-bg {
-            position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
-            width: 60%; height: 80%;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/World_map_dots.svg');
-            background-repeat: no-repeat; background-size: contain; background-position: center;
-            opacity: 0.05; pointer-events: none; z-index: 0;
-            filter: contrast(0) brightness(0);
-        }
-
-        /* 3. Tech Grid Overlay */
-        .tech-grid {
-            position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px; z-index: 0;
-        }
-
-        /* --- LEFT: TOWER --- */
-        .hero-content-left {
-            z-index: 10; position: relative; padding-left: 5%; width: 45%;
-        }
-
-        .tower-stack {
-            perspective: 1000px; transform-style: preserve-3d; margin-top: 3rem;
-        }
-        
+        .hero-content-left { z-index: 10; position: relative; padding-left: 5%; width: 45%; }
+        .tower-stack { perspective: 1000px; transform-style: preserve-3d; margin-top: 1.5rem; }
         .tower-card {
             background: rgba(255,255,255,0.7); backdrop-filter: blur(5px);
             border: 1px solid rgba(15, 23, 42, 0.1); border-left: 6px solid #f97316;
-            padding: 25px 30px; margin-bottom: 15px; width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px; width: 100%;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transform: rotateY(5deg) translateZ(0);
-            transition: all 0.3s ease-out; cursor: pointer;
+            transform: rotateY(5deg) translateZ(0); transition: all 0.3s ease-out; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center;
         }
-        
-        .tower-card:hover {
-            transform: rotateY(0deg) translateZ(20px) scale(1.02);
-            background: #fff; border-color: #f97316;
-            box-shadow: 20px 20px 60px rgba(249, 115, 22, 0.15);
+        .tower-card:hover { transform: rotateY(0deg) translateZ(20px) scale(1.02); background: #fff; border-color: #f97316; box-shadow: 20px 20px 60px rgba(249, 115, 22, 0.15); }
+
+        .hero-visual-right { position: absolute; right: 0; top: 55%; transform: translateY(-50%); width: 55%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; pointer-events: none; }
+        .hero-core-container { position: relative; width: 650px; height: 650px; perspective: 1500px; }
+        .hero-core-system { width: 100%; height: 100%; transform-style: preserve-3d; animation: hero-core-spin 25s infinite linear; }
+
+        .core-orbit { position: absolute; top: 50%; left: 50%; border-radius: 50%; transform-style: preserve-3d; }
+        .orbit-1 { width: 650px; height: 650px; margin: -325px; border: 2px dashed rgba(15, 23, 42, 0.1); transform: rotateX(60deg); animation: spin-o-1 30s infinite linear; }
+        .orbit-2 { width: 500px; height: 500px; margin: -250px; border: 1px solid rgba(249, 115, 22, 0.2); border-left: 4px solid #f97316; border-right: 4px solid #f97316; transform: rotateX(45deg); animation: spin-o-2 20s infinite linear reverse; box-shadow: 0 0 40px rgba(249, 115, 22, 0.1); }
+        .orbit-3 { width: 380px; height: 380px; margin: -190px; border: 2px dashed rgba(37, 99, 235, 0.3); transform: rotateZ(45deg) rotateY(60deg); animation: spin-o-3 25s infinite linear; }
+        .orbit-4 { width: 260px; height: 260px; margin: -130px; border: 1px solid rgba(168, 85, 247, 0.2); border-top: 3px solid #9333ea; transform: rotateY(60deg); animation: spin-o-4 15s infinite linear reverse; }
+
+        .core-node {
+            position: absolute; top: 50%; left: 50%; width: 170px; height: 65px; margin-top: -32px; margin-left: -85px;
+            background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(0,0,0,0.05); border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex; align-items: center; padding: 10px 15px; gap: 12px;
+            backdrop-filter: blur(5px); transform-style: preserve-3d;
         }
+        .node-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+        .node-label { font-family: 'JetBrains Mono', monospace; font-weight: bold; font-size: 13px; color: #0f172a; }
 
-        /* --- RIGHT: REACTOR --- */
-        .hero-visual-right {
-            position: absolute; right: 0; top: 55%; transform: translateY(-50%); /* Adjusted top position */
-            width: 55%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 5; pointer-events: none;
-        }
+        .n-1 { transform: rotateY(0deg) translateZ(280px); border-left: 4px solid #2563eb; }
+        .n-2 { transform: rotateY(90deg) translateZ(280px); border-left: 4px solid #f97316; }
+        .n-3 { transform: rotateY(180deg) translateZ(280px); border-left: 4px solid #9333ea; }
+        .n-4 { transform: rotateY(270deg) translateZ(280px); border-left: 4px solid #10b981; }
 
-        .reactor { position: relative; width: 650px; height: 650px; transform-style: preserve-3d; }
-
-        .ring-1 { 
+        .core-center {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 600px; height: 600px; border-radius: 50%;
-            border: 2px dashed rgba(15, 23, 42, 0.1);
-            animation: spin-3d 60s linear infinite;
-        }
-        .ring-2 { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 450px; height: 450px; border-radius: 50%;
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            border-left: 4px solid #f97316; border-right: 4px solid #f97316;
-            animation: spin-3d-rev 30s linear infinite;
-            box-shadow: 0 0 60px rgba(249, 115, 22, 0.1);
-        }
-        .ring-3 { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 250px; height: 250px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,245,249,0.5) 70%);
-            border: 1px solid rgba(15, 23, 42, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            animation: float 6s ease-in-out infinite;
+            width: 100px; height: 100px; border-radius: 50%;
+            background: #0f172a; color: white; display: flex; align-items: center; justify-content: center; text-align: center;
+            font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: bold;
+            box-shadow: 0 0 50px rgba(0,0,0,0.15); border: 4px solid white;
+            animation: float-center 4s ease-in-out infinite;
         }
 
-        /* --- TICKER --- */
-        .hero-ticker {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 40px;
-            background: #0f172a; color: #94a3b8;
-            display: flex; align-items: center; overflow: hidden;
-            font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 50;
-        }
+        @keyframes hero-core-spin { from { transform: rotateX(-15deg) rotateY(0deg); } to { transform: rotateX(-15deg) rotateY(360deg); } }
+        @keyframes spin-o-1 { 100% { transform: rotateX(60deg) rotateZ(360deg); } }
+        @keyframes spin-o-2 { 100% { transform: rotateX(45deg) rotateY(360deg); } }
+        @keyframes spin-o-3 { 100% { transform: rotateZ(45deg) rotateY(60deg) rotateX(360deg); } }
+        @keyframes spin-o-4 { 100% { transform: rotateY(60deg) rotateZ(360deg); } }
+        @keyframes float-center { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-15px); } }
+
+        .hero-ticker { position: absolute; bottom: 0; left: 0; width: 100%; height: 40px; background: #0f172a; color: #94a3b8; display: flex; align-items: center; overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 50; }
         .ticker-track { display: flex; animation: scroll-ticker 20s linear infinite; white-space: nowrap; }
         .ticker-item { padding: 0 40px; }
         .ticker-highlight { color: #f97316; font-weight: bold; }
-
-        @keyframes spin-3d { 0% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg); } 100% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg); } }
-        @keyframes spin-3d-rev { 0% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg); } 100% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-360deg); } }
         @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        @keyframes float { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-20px); } }
 
-        /* --- CONTENT --- */
         .service-section { display: flex; align-items: flex-start; position: relative; }
         .service-content { width: 50%; }
-        .service-block { 
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; 
-            padding: 2rem 6rem; opacity: 0.3; transition: opacity 0.5s; position: relative;
-            border-left: 1px solid rgba(0,0,0,0.05); background: #ffffff;
-        }
+        .service-block { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 2rem 6rem; opacity: 0.3; transition: opacity 0.5s; position: relative; border-left: 1px solid rgba(0,0,0,0.05); background: #ffffff; }
         .service-block.active { opacity: 1; }
         .big-number { font-family: 'Space Grotesk', sans-serif; font-size: 8rem; font-weight: 700; position: absolute; top: 0; left: 2rem; line-height: 1; -webkit-text-stroke: 2px rgba(0, 0, 0, 0.05); color: transparent; z-index: -1; }
         .service-block.active .big-number { -webkit-text-stroke: 2px rgba(249, 115, 22, 0.15); } 
 
-        .service-visuals { 
-            width: 50%; height: 100vh; position: sticky; top: 0; 
-            display: flex; align-items: center; justify-content: center; 
-            overflow: hidden; border-left: 1px solid rgba(0,0,0,0.05); background: #fff7ed;
-            transition: background-color 0.8s ease;
-        }
+        .service-visuals { width: 50%; height: 100vh; position: sticky; top: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border-left: 1px solid rgba(0,0,0,0.05); background: #fff7ed; transition: background-color 0.8s ease; }
         .visual-card { position: absolute; width: 85%; height: 75%; opacity: 0; transition: all 1s; background: white; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
         .visual-card.active { opacity: 1; z-index: 2; transform: translateY(0); }
         .visual-card:not(.active) { transform: translateY(50px); }
         .visual-img { width: 100%; height: 80%; object-fit: cover; }
         .visual-content { padding: 20px; }
         .map-style { filter: grayscale(100%) invert(92%) contrast(83%); transition: filter 0.3s ease; }
-        .map-style:hover { filter: grayscale(0%) invert(0%); }
     </style>
 </head>
 <body class="antialiased">
@@ -168,16 +118,38 @@
         <span class="loader-text">INNOVATION EDGE</span>
     </div>
 
-    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-50 text-slate-900 bg-white/60 backdrop-blur-md border-b border-white/40">
-        <a href="index.html" class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer">
-            <div class="w-3 h-3 bg-orange-500 rounded-sm"></div> Innovation Edge
+    <nav class="fixed top-0 w-full p-6 md:p-8 flex justify-between items-center z-50 text-slate-900 bg-white/70 backdrop-blur-lg border-b border-slate-200 shadow-sm transition-all duration-300">
+        <a href="index.html" class="text-xl font-bold font-display tracking-tighter uppercase flex items-center gap-2 cursor-pointer group">
+            <div class="w-3 h-3 bg-orange-500 rounded-sm transition-transform duration-300 group-hover:rotate-90 group-hover:scale-125"></div> 
+            Innovation Edge
         </a>
-        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-bold opacity-80">
-            <a href="index.html" class="hover:text-orange-600 transition-colors">Home</a>
-            <a href="#" class="text-orange-600 transition-colors">Services</a>
-            <a href="#contact" class="hover:text-orange-600 transition-colors">Contact</a>
+        
+        <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.2em] font-bold opacity-90 font-display">
+            <a href="index.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Home</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-orange-600">Home</span>
+            </a>
+            <a href="services.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Services</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-orange-600">Services</span>
+            </a>
+            <a href="events.html" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Events</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-orange-600">Events</span>
+            </a>
+            <a href="#contact" class="relative overflow-hidden group">
+                <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-[120%]">Contact</span>
+                <span class="absolute left-0 top-0 inline-block translate-y-[120%] transition-transform duration-300 ease-out group-hover:translate-y-0 text-orange-600">Contact</span>
+            </a>
         </div>
-        <a href="#contact" class="border border-slate-900 bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-widest hover:bg-orange-600 transition-all shadow-lg">Partner</a>
+
+        <a href="#contact" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-mono font-bold tracking-widest text-white bg-slate-900 rounded-full group text-[10px] uppercase shadow-lg">
+            <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-orange-600 rounded-full group-hover:w-56 group-hover:h-56"></span>
+            <span class="relative flex items-center gap-2">
+                Partner With Us
+                <svg class="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
+        </a>
     </nav>
 
     <section class="hero-section">
@@ -187,68 +159,98 @@
 
         <div class="container mx-auto flex items-center h-full relative">
             
-            <div class="hero-content-left">
-                <div class="mb-10">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="h-px w-10 bg-orange-500"></span>
-                        <span class="text-orange-600 font-mono text-xs uppercase tracking-widest font-bold">System Modules</span>
+            <div class="hero-content-left relative z-10">
+                <div class="absolute -top-10 -left-10 w-64 h-64 bg-orange-400/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0"></div>
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse z-0" style="animation-delay: 2s;"></div>
+
+                <div class="bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-slate-900/50 p-6 md:p-8 rounded-[1.5rem] mb-6 relative overflow-hidden z-10">
+                    
+                    <div class="flex items-center gap-3 mb-3 relative z-10">
+                        <span class="h-px w-8 bg-orange-500"></span>
+                        <span class="text-orange-400 font-mono text-[10px] uppercase tracking-widest font-bold">System Modules</span>
                     </div>
-                    <h1 class="text-6xl md:text-7xl font-display font-bold text-slate-900 leading-[0.95] tracking-tight">
-                        Engineered<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">Growth.</span>
+                    <h1 class="text-5xl md:text-6xl font-display font-bold text-white leading-[0.95] tracking-tight relative z-10">
+                        We Engineer<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Business Growth.</span>
                     </h1>
-                    <p class="text-slate-500 mt-6 max-w-md text-base leading-relaxed border-l-2 border-slate-300 pl-4">
+                    <p class="text-slate-300 mt-4 max-w-sm text-sm leading-relaxed border-l-2 border-white/20 pl-4 relative z-10">
                         Comprehensive solutions for modern enterprises. Select a module below to initiate breakdown.
                     </p>
                 </div>
 
-                <div class="tower-stack">
+                <div class="tower-stack relative z-10">
                     <div class="tower-card group" onclick="scrollToService(0)">
                         <div>
-                            <h4 class="font-cyber font-bold text-xl uppercase text-slate-900">Workshops</h4>
-                            <p class="text-[10px] text-slate-400 font-mono mt-1">TRAINING & SIMULATION</p>
+                            <h4 class="font-cyber font-bold text-lg uppercase text-slate-900">Workshops</h4>
+                            <p class="text-[9px] text-slate-400 font-mono mt-1">TRAINING & SIMULATION</p>
                         </div>
-                        <span class="text-2xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
+                        <span class="text-xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
                     </div>
 
                     <div class="tower-card group" onclick="scrollToService(1)">
                         <div>
-                            <h4 class="font-cyber font-bold text-xl uppercase text-slate-900">Consultation</h4>
-                            <p class="text-[10px] text-slate-400 font-mono mt-1">STRATEGIC AUDITS</p>
+                            <h4 class="font-cyber font-bold text-lg uppercase text-slate-900">Consultation</h4>
+                            <p class="text-[9px] text-slate-400 font-mono mt-1">STRATEGIC AUDITS</p>
                         </div>
-                        <span class="text-2xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
+                        <span class="text-xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
                     </div>
 
                     <div class="tower-card group" onclick="scrollToService(2)">
                         <div>
-                            <h4 class="font-cyber font-bold text-xl uppercase text-slate-900">Conferences</h4>
-                            <p class="text-[10px] text-slate-400 font-mono mt-1">EVENT MANAGEMENT</p>
+                            <h4 class="font-cyber font-bold text-lg uppercase text-slate-900">Conferences</h4>
+                            <p class="text-[9px] text-slate-400 font-mono mt-1">EVENT MANAGEMENT</p>
                         </div>
-                        <span class="text-2xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
+                        <span class="text-xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
                     </div>
 
                     <div class="tower-card group" onclick="scrollToService(3)">
                         <div>
-                            <h4 class="font-cyber font-bold text-xl uppercase text-slate-900">Courses</h4>
-                            <p class="text-[10px] text-slate-400 font-mono mt-1">CERTIFICATION</p>
+                            <h4 class="font-cyber font-bold text-lg uppercase text-slate-900">Courses</h4>
+                            <p class="text-[9px] text-slate-400 font-mono mt-1">CERTIFICATION</p>
                         </div>
-                        <span class="text-2xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
+                        <span class="text-xl text-slate-300 group-hover:text-orange-500 transition-colors">↓</span>
                     </div>
                 </div>
             </div>
 
             <div class="hero-visual-right">
-                <div class="reactor">
-                    <div class="ring-1"></div>
-                    <div class="ring-2"></div>
-                    <div class="ring-3">
-                        <div class="text-center">
-                            <span class="block font-mono text-xs text-orange-500 font-bold mb-2">STATUS: ONLINE</span>
-                            <h2 class="text-5xl font-display font-bold text-slate-900 leading-none">FULL<br>SCOPE</h2>
+                <div class="hero-core-container">
+                    <div class="hero-core-system">
+                        <div class="core-orbit orbit-1"></div>
+                        <div class="core-orbit orbit-2"></div>
+                        <div class="core-orbit orbit-3"></div>
+                        <div class="core-orbit orbit-4"></div>
+                        
+                        <div class="core-node n-1">
+                            <div class="node-icon bg-blue-100 text-blue-600">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            </div>
+                            <div class="node-label">TRAINING</div>
                         </div>
+                        <div class="core-node n-2">
+                            <div class="node-icon bg-orange-100 text-orange-600">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                            </div>
+                            <div class="node-label">STRATEGY</div>
+                        </div>
+                        <div class="core-node n-3">
+                            <div class="node-icon bg-purple-100 text-purple-600">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            </div>
+                            <div class="node-label">EVENTS</div>
+                        </div>
+                        <div class="core-node n-4">
+                            <div class="node-icon bg-green-100 text-green-600">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            </div>
+                            <div class="node-label">COURSES</div>
+                        </div>
+                        
+                        <div class="core-center">EDGE</div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="hero-ticker">
@@ -269,81 +271,41 @@
 
     <section class="service-section" id="services-wrapper">
         <div class="service-content">
-            
             <div class="service-block active" data-index="0" data-bgcolor="#eff6ff">
                 <div class="big-number">01</div>
                 <div class="relative pt-10">
                     <h3 class="text-4xl md:text-5xl font-bold font-display mb-6 text-slate-900">Workshops & <br>Training</h3>
-                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">
-                        Interactive, hands-on sessions designed to tackle real-world healthcare data challenges.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">DATA GOV</span>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">COMPLIANCE</span>
-                    </div>
+                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">Interactive, hands-on sessions designed to tackle real-world healthcare data challenges.</p>
                 </div>
             </div>
-            
             <div class="service-block" data-index="1" data-bgcolor="#fff7ed">
                 <div class="big-number">02</div>
                 <div class="relative pt-10">
                     <h3 class="text-4xl md:text-5xl font-bold font-display mb-6 text-slate-900">Strategic <br>Consultation</h3>
-                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">
-                        Tailored advice for institutions looking to modernize their infrastructure.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold">AUDITS</span>
-                        <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold">STRATEGY</span>
-                    </div>
+                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">Tailored advice for institutions looking to modernize their infrastructure.</p>
                 </div>
             </div>
-
             <div class="service-block" data-index="2" data-bgcolor="#f3e8ff">
                 <div class="big-number">03</div>
                 <div class="relative pt-10">
                     <h3 class="text-4xl md:text-5xl font-bold font-display mb-6 text-slate-900">Conference <br>Management</h3>
-                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">
-                        End-to-end organization of scientific forums and global events.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded text-xs font-bold">LOGISTICS</span>
-                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded text-xs font-bold">SPEAKERS</span>
-                    </div>
+                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">End-to-end organization of scientific forums and global events.</p>
                 </div>
             </div>
-
             <div class="service-block" data-index="3" data-bgcolor="#ecfccb">
                 <div class="big-number">04</div>
                 <div class="relative pt-10">
                     <h3 class="text-4xl md:text-5xl font-bold font-display mb-6 text-slate-900">Professional <br>Courses</h3>
-                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">
-                        Flexible learning paths including Online and Face-to-Face options.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">CERTIFIED</span>
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">CSC</span>
-                    </div>
+                    <p class="text-slate-600 text-lg leading-loose mb-8 max-w-lg">Flexible learning paths including Online and Face-to-Face options.</p>
                 </div>
             </div>
         </div>
 
         <div class="service-visuals">
-            <div class="visual-card active" id="visual-0">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="visual-img">
-                <div class="visual-content"><h4 class="font-bold text-xl text-slate-900">Interactive Learning</h4></div>
-            </div>
-            <div class="visual-card" id="visual-1">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="visual-img">
-                <div class="visual-content"><h4 class="font-bold text-xl text-slate-900">Expert Guidance</h4></div>
-            </div>
-            <div class="visual-card" id="visual-2">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop" class="visual-img">
-                <div class="visual-content"><h4 class="font-bold text-xl text-slate-900">Global Events</h4></div>
-            </div>
-            <div class="visual-card" id="visual-3">
-                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" class="visual-img">
-                <div class="visual-content"><h4 class="font-bold text-xl text-slate-900">Certified Growth</h4></div>
-            </div>
+            <div class="visual-card active" id="visual-0"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" class="visual-img"></div>
+            <div class="visual-card" id="visual-1"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="visual-img"></div>
+            <div class="visual-card" id="visual-2"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop" class="visual-img"></div>
+            <div class="visual-card" id="visual-3"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop" class="visual-img"></div>
         </div>
     </section>
 
@@ -352,29 +314,29 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
                     <div class="text-xl font-bold font-display uppercase tracking-tighter mb-6 flex items-center gap-2">
-                        <div class="w-3 h-3 bg-orange-500 rounded-sm"></div> Innovation Edge
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div> About Us
                     </div>
                     <p class="text-gray-400 leading-relaxed text-sm">
-                        Empowering healthcare and corporate professionals with tailored training.
+                        Innovation Edge Kuwait empowers healthcare professionals with tailored training in HI&IM, focusing on data governance, informatics, compliance, and leadership to enhance healthcare delivery in Kuwait. We adapt to the evolving needs of the healthcare industry, ensuring our programs remain relevant and impactful. Our goal is to drive innovation and equip individuals with the skills to excel in a dynamic healthcare landscape.
                     </p>
                 </div>
                 <div class="md:col-span-2">
-                    <h4 class="text-sm font-bold uppercase tracking-widest text-orange-500 mb-6 font-mono">Hours</h4>
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-6">Opening Hours</h4>
                     <ul class="text-sm text-gray-400 space-y-3 font-mono">
-                        <li>Mon-Fri: 09:00 - 21:00</li>
-                        <li>Sat: 09:00 - 18:00</li>
+                        <li class="flex justify-between"><span>Mon-Fri</span> <span class="text-white">09:00 - 21:00</span></li>
+                        <li class="flex justify-between"><span>Sat</span> <span class="text-white">09:00 - 18:00</span></li>
                     </ul>
                 </div>
                 <div class="md:col-span-6 flex flex-col gap-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h4 class="text-sm font-bold uppercase tracking-widest text-orange-500 mb-4 font-mono">Location</h4>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Location</h4>
                             <p class="text-gray-300 text-sm leading-relaxed">Kuwait, Al Mirqab<br>M Square Complex</p>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold uppercase tracking-widest text-orange-500 mb-4 font-mono">Contact</h4>
-                            <a href="tel:96599573375" class="block text-gray-300 hover:text-white transition-colors text-sm mb-2 font-mono">(+965) 9957 3375</a>
-                            <a href="mailto:contact@innovationedges.com" class="block text-gray-300 hover:text-white transition-colors text-sm font-mono">contact@innovationedges.com</a>
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-4">Contact</h4>
+                            <a href="tel:96599573375" class="block text-gray-300 hover:text-white transition-colors text-sm mb-2">(+965) 9957 3375</a>
+                            <a href="mailto:contact@innovationedges.com" class="block text-gray-300 hover:text-white transition-colors text-sm">contact@innovationedges.com</a>
                         </div>
                     </div>
                     <div class="w-full h-48 rounded-xl overflow-hidden border border-white/10 relative group bg-slate-900">
@@ -385,7 +347,7 @@
         </div>
         <div class="border-t border-slate-900 pt-8 px-6 md:px-24 flex justify-between items-end">
             <span class="text-[12vw] font-bold text-white/5 leading-none select-none">EDGE</span>
-            <span class="text-xs text-slate-500 mb-4 font-mono">© 2026 Innovation Edge. All rights reserved.</span>
+            <span class="text-xs text-slate-500 mb-4">© 2026 Innovation Edge. All rights reserved.</span>
         </div>
     </footer>
 
@@ -396,7 +358,6 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
-        // --- NAVIGATION CLICK HANDLER ---
         function scrollToService(index) {
             const blocks = document.querySelectorAll('.service-block');
             if(blocks[index]) {
@@ -404,7 +365,6 @@
             }
         }
 
-        // --- STICKY SCROLL & BG COLOR LOGIC ---
         const serviceBlocks = document.querySelectorAll('.service-block');
         const visualCards = document.querySelectorAll('.visual-card');
 
